@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import MovieList from 'components/movie-list.js';
+import MovieList from 'components/MovieList.vue';
 import * as TMDBRequest from 'modules/TMDBRequest.js';
 
 let vm = new Vue({

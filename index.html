@@ -10,6 +10,8 @@
   <div id="app">
     <movie-list v-bind:movies="movies"></movie-list>
     <button type="button" v-if="!loadComplete" v-on:click="getTopMovies">More</button>
+
+    <!-- <movie-detail v-if="isShow"></movie-detail> -->
   </div>
   <script src="./dist/main.bundle.js"></script>
 </body>

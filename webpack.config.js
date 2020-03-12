@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const srcPath = path.resolve(__dirname, 'src');
@@ -42,5 +42,8 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 };
