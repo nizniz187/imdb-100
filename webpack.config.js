@@ -6,7 +6,7 @@ const srcPath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
-  entry: `${srcPath}/index`,
+  entry: `${srcPath}/main`,
   output: {
     filename: '[name].bundle.js',
     path: distPath,
@@ -14,7 +14,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js'
+      vue: 'vue/dist/vue.js',
+      components: `${srcPath}/components`
     },
     extensions: ['*', '.js', '.vue']
   },

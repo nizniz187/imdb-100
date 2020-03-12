@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Vue.js v2</title>
+  <title>IMDB 100</title>
 </head>
 <body>
-  <div id="app">{{ message }}</div>
+  <div id="app">
+    <movie-list v-bind:movies="movies"></movie-list>
+  </div>
   <script src="./dist/main.bundle.js"></script>
 </body>
 </html>
