@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import MovieList from 'components/MovieList.vue';
+import MovieDetails from 'components/MovieDetails.vue';
 import * as TMDBRequest from 'modules/TMDBRequest.js';
 
 let vm = new Vue({
   el: '#app',
   data: {
     movies: [],
-    loadComplete: false
+    isListLoadComplete: false
   },
   components: {
-    MovieList
+    MovieList, 
+    MovieDetails
   },
   created: function() {
     this.getTopMovies();

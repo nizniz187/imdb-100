@@ -37,13 +37,16 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-            { loader: MiniCssExtractPlugin.loader },
-            'css-loader'
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader'
         ]
       }
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].bundle.css'
+    })
   ]
 };

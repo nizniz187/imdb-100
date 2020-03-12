@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>IMDB 100</title>
+  <link rel="stylesheet" type="text/css" href="./dist/main.bundle.css">
 </head>
 <body>
   <div id="app">
     <movie-list v-bind:movies="movies"></movie-list>
-    <button type="button" v-if="!loadComplete" v-on:click="getTopMovies">More</button>
+    <button type="button" v-if="!isListLoadComplete" v-on:click="getTopMovies">More</button>
 
-    <!-- <movie-detail v-if="isShow"></movie-detail> -->
+    <movie-details></movie-details>
   </div>
   <script src="./dist/main.bundle.js"></script>
 </body>
