@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "ccd414504440f121eb67";
+/******/ 	var hotCurrentHash = "4cb7025d4a40b3591e4d";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1552,7 +1552,19 @@ eval("__webpack_require__.r(__webpack_exports__);\nlet MovieItem = {\r\n  props:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.js\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var components_movie_list_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! components/movie-list.js */ \"./src/components/movie-list.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);\n\r\n\r\n\r\n\r\n\r\nlet vm = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({\r\n  el: '#app',\r\n  data: {\r\n    movies: []\r\n  },\r\n  components: {\r\n    MovieList: components_movie_list_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\r\n  }\r\n});\r\n\r\naxios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://api.themoviedb.org/3/discover/movie?api_key=70ab38cd7822777d9232fb0822e80e00&sort_by=popularity.desc')\r\n  .then(function (response) {\r\n    // handle success\r\n    console.log(response);\r\n    vm.movies = response.data.results;\r\n  })\r\n  .catch(function (error) {\r\n    // handle error\r\n    console.log(error);\r\n  })\r\n  .then(function () {\r\n    // always executed\r\n  });\r\n\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.js\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var components_movie_list_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! components/movie-list.js */ \"./src/components/movie-list.js\");\n/* harmony import */ var modules_TMDBRequest_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! modules/TMDBRequest.js */ \"./src/modules/TMDBRequest.js\");\n\r\n\r\n\r\n\r\nlet vm = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({\r\n  el: '#app',\r\n  data: {\r\n    movies: [],\r\n    loadComplete: false\r\n  },\r\n  components: {\r\n    MovieList: components_movie_list_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\r\n  },\r\n  created: function() {\r\n    this.getTopMovies();\r\n  },\r\n  methods: {\r\n    getTopMovies() {\r\n      if(this.loadComplete) { return; }\r\n\r\n      modules_TMDBRequest_js__WEBPACK_IMPORTED_MODULE_2__[\"getTopMovies\"]({ \r\n        page: Math.floor(this.movies.length / 20 + 1),\r\n        successHandler: ({ data: { results } = {} } = {}) => { \r\n          if(Array.isArray(results)) {\r\n            results.forEach(movie => { this.movies.push(movie); });\r\n            \r\n            if(this.movies.length >= 100) { this.loadComplete = true; }\r\n          } else {\r\n            console.log('No result.');\r\n          }\r\n        } \r\n      });\r\n    }\r\n  }\r\n});\n\n//# sourceURL=webpack:///./src/main.js?");
+
+/***/ }),
+
+/***/ "./src/modules/TMDBRequest.js":
+/*!************************************!*\
+  !*** ./src/modules/TMDBRequest.js ***!
+  \************************************/
+/*! exports provided: getTopMovies */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getTopMovies\", function() { return getTopMovies; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\nconst HOST = 'https://api.themoviedb.org/3';\r\nconst API_KEY = '70ab38cd7822777d9232fb0822e80e00';\r\n\r\nfunction getTopMovies({ page = 1, successHandler, errorHandler } = {}) {\r\n  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`${HOST}/discover/movie?api_key=${API_KEY}&page=${page}`)\r\n    .then(function (response) {\r\n      // handle success\r\n      console.log(response);\r\n      if(typeof successHandler === 'function') { successHandler(response); }\r\n    })\r\n    .catch(function (error) {\r\n      // handle error\r\n      console.log(error);\r\n      if(typeof errorHandler === 'function') { errorHandler(error); }\r\n    });\r\n}\n\n//# sourceURL=webpack:///./src/modules/TMDBRequest.js?");
 
 /***/ }),
 

@@ -1,28 +1,35 @@
 import Vue from 'vue';
 import MovieList from 'components/movie-list.js';
-
-import axios from 'axios';
+import * as TMDBRequest from 'modules/TMDBRequest.js';
 
 let vm = new Vue({
   el: '#app',
   data: {
-    movies: []
+    movies: [],
+    loadComplete: false
   },
   components: {
     MovieList
+  },
+  created: function() {
+    this.getTopMovies();
+  },
+  methods: {
+    getTopMovies() {
+      if(this.loadComplete) { return; }
+
+      TMDBRequest.getTopMovies({ 
+        page: Math.floor(this.movies.length / 20 + 1),
+        successHandler: ({ data: { results } = {} } = {}) => { 
+          if(Array.isArray(results)) {
+            results.forEach(movie => { this.movies.push(movie); });
+            
+            if(this.movies.length >= 100) { this.loadComplete = true; }
+          } else {
+            console.log('No result.');
+          }
+        } 
+      });
+    }
   }
 });
-
-axios.get('https://api.themoviedb.org/3/discover/movie?api_key=70ab38cd7822777d9232fb0822e80e00&sort_by=popularity.desc')
-  .then(function (response) {
-    // handle success
-    console.log(response);
-    vm.movies = response.data.results;
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });
