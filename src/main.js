@@ -1,16 +1,28 @@
 import Vue from 'vue';
 import MovieList from 'components/movie-list.js';
 
-new Vue({
+import axios from 'axios';
+
+let vm = new Vue({
   el: '#app',
   data: {
-    movies: [
-      { id: 'movie1', rank: 1, title: 'The Shawshank Redemption', rating: '9.2'},
-      { id: 'movie2', rank: 2, title: 'God Father', rating: '9.1' },
-      { id: 'movie3', rank: 3, title: 'God Father II', rating: '9.0' }
-    ]
+    movies: []
   },
   components: {
     MovieList
   }
 });
+
+axios.get('https://api.themoviedb.org/3/discover/movie?api_key=70ab38cd7822777d9232fb0822e80e00&sort_by=popularity.desc')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+    vm.movies = response.data.results;
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });

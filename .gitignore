@@ -101,3 +101,5 @@ typings/
 
 # TernJS port file
 .tern-port
+*.hot-update.json
+*.hot-update.js
