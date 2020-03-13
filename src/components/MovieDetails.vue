@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="90vw" persistent @click:outside="hide">
     <v-card>
-      <v-card-title>{{ movieDetails.title }} - {{ movieDetails.tagline }}</v-card-title>
+      <v-card-title>{{ movieDetails.title }}</v-card-title>
       <v-divider></v-divider>
       <v-list-item>
         <v-img class="grey lighten-2 ma-5" max-width="250px" max-height="250px" contain
@@ -60,7 +60,10 @@
           </div>
         </v-list-item-content>
       </v-list-item>
-      <v-card-text>{{ movieDetails.overview }}</v-card-text>
+      <v-card-text>
+        <h3 v-if="movieDetails.tagline !== null">{{ movieDetails.tagline }}</h3>
+        {{ movieDetails.overview }}
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
