@@ -18,8 +18,8 @@ const store = new Vuex.Store({
         movies.forEach(movie => { state.topMovies.push(movie); });
       }
     },
-    showDetails: (state, payload) => {
-      state.movieDetails = payload;
+    showDetails: (state, { details } = {}) => {
+      state.movieDetails = details;
     },
     showDetailsPanel: state => {
       state.isDetailsPanelShowed = true;
@@ -34,15 +34,22 @@ const store = new Vuex.Store({
     getTopMovies({ dispatch, getters }) {
       if(getters.isTopMoviesLoaded) { return; }
 
-      TMDBRequest.getTopMovies(Math.floor(getters.topMoviesCount / 20 + 1))
-        .then(({ data: { results } = {} } = {}) => { 
-          dispatch('addTopMovies', { movies: results })
-        });
+      TMDBRequest.getTopMovies({
+        page: Math.floor(getters.topMoviesCount / 20 + 1),
+        successHandler: results => {
+          dispatch('addTopMovies', { movies: results });
+        }
+      });
     },
     showDetails: function({ commit }, { movieId } = {}) {
-      console.log(movieId)
       commit('showDetailsPanel');
-      commit('showDetails', { movieId });
+      
+      TMDBRequest.getMovieDetails({
+        movieId,
+        successHandler: results => {
+          commit('showDetails', { details: results });
+        }
+      });
     }
   },
   getters: {

@@ -18,7 +18,7 @@ export default {
   .movie-details {
     background-color: white;
     border: 1px solid black;
-    width: 80vw; height: 80vh;
-    position: absolute; top: 10%; left: 10%;
+    width: 90vw; height: 90vh;
+    position: absolute; top: 5%; left: 5%;
   }
 </style>
