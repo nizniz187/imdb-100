@@ -8,10 +8,12 @@
   <link rel="stylesheet" type="text/css" href="./dist/main.bundle.css">
   <style>
     #app { padding-top: 50px; }
+    #btnBack { position: fixed; top: 10px; left: 10px; z-index: 2; }
   </style>
 </head>
 <body>
   <div id="app">
+    <button type="button" id="btnBack" v-on:click="showTopMovies">Top Movies</button>
     <search-bar></search-bar>
     <movie-list></movie-list>
     <button type="button" v-if="!isTopMoviesLoaded" v-on:click="getTopMovies">More</button>

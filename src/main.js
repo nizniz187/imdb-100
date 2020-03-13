@@ -16,8 +16,11 @@ const store = new Vuex.Store({
   mutations: {
     addTopMovies: (state, { movies } = {}) => {
       if(Array.isArray(movies)) {
-        movies.forEach(movie => { state.topMovies.push(movie); });
+        state.topMovies.splice(state.topMovies.length, 0, ...movies);
       }
+    },
+    clearMovieList: state => {
+      state.topMovies.splice(0, state.topMovies.length);
     },
     showDetails: (state, { details } = {}) => {
       state.movieDetails = details;
@@ -31,7 +34,7 @@ const store = new Vuex.Store({
       if(getters.isTopMoviesLoaded) { return; }
       
       commit('addTopMovies', payload);
-    },    
+    },
     getTopMovies({ dispatch, getters }) {
       if(getters.isTopMoviesLoaded) { return; }
 
@@ -43,7 +46,14 @@ const store = new Vuex.Store({
       });
     },
     searchMovie: ({ commit }, { keyword } = {}) => {
-      console.log(keyword);
+      commit('clearMovieList');
+
+      TMDBRequest.searchMovie({
+        keyword,
+        successHandler: results => {
+          commit('addTopMovies', { movies: results });
+        }
+      });
     },
     showDetails: ({ commit }, { movieId } = {}) => {
       commit('showDetailsPanel');
@@ -54,10 +64,13 @@ const store = new Vuex.Store({
           commit('showDetails', { details: results });
         }
       });
+    },
+    showTopMovies: ({ dispatch, commit }) => {
+      commit('clearMovieList');
+      dispatch('getTopMovies');
     }
   },
   getters: {
-    isDetailsPanelShowed: state => { return state.isDetailsPanelShowed; },
     isTopMoviesLoaded: (state, getters) => { return getters.topMoviesCount >= 100; },
     topMoviesCount: state => { return state.topMovies.length; }
   } 
@@ -75,14 +88,17 @@ new Vue({
     this.$store.dispatch('getTopMovies');
   },
   computed: {
+    ...Vuex.mapState([
+      'isDetailsPanelShowed'
+    ]),
     ...Vuex.mapGetters([
-      'isDetailsPanelShowed',
       'isTopMoviesLoaded'
     ])
   },
   methods: {
     ...Vuex.mapActions([
-      'getTopMovies'
+      'getTopMovies',
+      'showTopMovies'
     ])
   }
 });
