@@ -15,8 +15,9 @@
   <div id="app">
     <button type="button" id="btnBack" v-on:click="showTopMovies">Top Movies</button>
     <search-bar></search-bar>
-    <movie-list></movie-list>
-    <button type="button" v-if="!isTopMoviesLoaded" v-on:click="getTopMovies">More</button>
+
+    <movie-list v-bind:data="topMovies" v-if="isDisplayModeTop"></movie-list>
+    <movie-list v-bind:data="searchResults" v-if="isDisplayModeSearch"></movie-list>
 
     <movie-details v-if="isDetailsPanelShowed"></movie-details>
   </div>

@@ -24,8 +24,8 @@ export function getTopMovies({ page = 1, successHandler, errorHandler } = {}) {
 }
 export function searchMovie({ keyword, page = 1, successHandler, errorHandler } = {}) {
   return axios.get(`${HOST}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(keyword)}&page=${page}`)
-    .then(({ data: { results } = {} } = {}) => {
-      resolveHandler(results, successHandler);
+    .then(({ data } = {}) => {
+      resolveHandler(data, successHandler);
     })
     .catch(error => {
       rejectHandler(error, errorHandler);

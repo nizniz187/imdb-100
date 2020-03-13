@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <input type="text" placeholder="Type movie name for searching..." v-model="keyword" />
-    <button type="button" v-on:click="searchMovie({ keyword })">Search</button>
+    <button type="button" v-on:click="showSearchResults({ keyword })">Search</button>
   </div>
 </template>
 
@@ -9,25 +9,25 @@
 import { mapActions } from 'vuex';
 
 export default {
-    data: function() {
-        return {
-            keyword: ''
-        };
-    },
-    methods: {
-        ...mapActions([
-            'searchMovie'
-        ])
-    }
+  data() {
+    return {
+      keyword: ''
+    };
+  },
+  methods: {
+    ...mapActions([
+      'showSearchResults'
+    ])
+  }
 }
 </script>
 
 <style scoped>
-    .search-bar {
-        background-color: cornflowerblue;
-        position: fixed; top: 0; left: 0;
-        padding: 10px;
-        text-align: center;
-        width: 100%;
-    }
+  .search-bar {
+    background-color: cornflowerblue;
+    position: fixed; top: 0; left: 0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+  }
 </style>
