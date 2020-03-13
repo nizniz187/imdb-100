@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import SearchBar from 'components/SearchBar.vue';
 import MovieList from 'components/MovieList.vue';
 import MovieDetails from 'components/MovieDetails.vue';
 import * as TMDBRequest from 'modules/TMDBRequest.js';
@@ -26,7 +27,7 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    addTopMovies: function({ commit, getters }, payload) {
+    addTopMovies: ({ commit, getters }, payload) => {
       if(getters.isTopMoviesLoaded) { return; }
       
       commit('addTopMovies', payload);
@@ -41,7 +42,10 @@ const store = new Vuex.Store({
         }
       });
     },
-    showDetails: function({ commit }, { movieId } = {}) {
+    searchMovie: ({ commit }, { keyword } = {}) => {
+      console.log(keyword);
+    },
+    showDetails: ({ commit }, { movieId } = {}) => {
       commit('showDetailsPanel');
       
       TMDBRequest.getMovieDetails({
@@ -63,6 +67,7 @@ new Vue({
   el: '#app',
   store,
   components: {
+    SearchBar,
     MovieList, 
     MovieDetails
   },
