@@ -1,10 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" width="90vw">
+  <v-dialog v-model="dialog" width="90vw" persistent @click:outside="hide">
     <v-card>
       <v-card-title>{{ movieDetails.title }} - {{ movieDetails.tagline }}</v-card-title>
       <v-divider></v-divider>
       <v-list-item>
-        <v-list-item-avatar tile size="250" color="grey"></v-list-item-avatar>
+        <v-img class="grey lighten-2 ma-5" max-width="250px" max-height="250px" contain
+          v-bind:src="getImgSrc()"></v-img>
         <v-list-item-content>
           <div>
             <span class="font-weight-bold">Genres: </span>
@@ -19,9 +20,9 @@
           </div>
           <div>
             <span class="font-weight-bold">Production Companies: </span>
-            <span v-for="(company, index) in getMovieDetailsValue('production_companies')" v-bind:key="company.id">
+            <span v-for="(company, index) in getDetailsValue('production_companies')" v-bind:key="company.id">
               {{ company.name }}
-              <span v-if="index < getMovieDetailsValue('production_companies').length - 1">/</span>
+              <span v-if="index < getDetailsValue('production_companies').length - 1">/</span>
             </span>
           </div>
           <div>
@@ -30,7 +31,7 @@
           </div>
           <div>
             <span class="font-weight-bold">Release Date: </span>
-            <span>{{ getMovieDetailsValue('release_date') }}</span>
+            <span>{{ getDetailsValue('release_date') }}</span>
           </div>
           <div>
             <span class="font-weight-bold">Revenue: </span>
@@ -42,14 +43,14 @@
           </div>
           <div>
             <span class="font-weight-bold">Spoken Languages: </span>
-            <span v-for="(language, index) in getMovieDetailsValue('spoken_languages')" v-bind:key="index">
+            <span v-for="(language, index) in getDetailsValue('spoken_languages')" v-bind:key="index">
               {{ language.name }}
-              <span v-if="index < getMovieDetailsValue('spoken_languages').length - 1">/</span>
+              <span v-if="index < getDetailsValue('spoken_languages').length - 1">/</span>
             </span>
           </div>
           <div>
             <span class="font-weight-bold">Vote Average / Count: </span>
-            <span>{{ getMovieDetailsValue('vote_average') }} / {{ getMovieDetailsValue('vote_count') }}</span>
+            <span>{{ getDetailsValue('vote_average') }} / {{ getDetailsValue('vote_count') }}</span>
           </div>
         </v-list-item-content>
       </v-list-item>
@@ -59,12 +60,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   data () {
     return {
-      dialog: true,
       notifications: false,
       sound: true,
       widgets: false
@@ -73,12 +73,22 @@ export default {
   computed: {
     ...mapState([
       'movieDetails'
-    ])
+    ]),
+    ...mapState({
+      dialog: 'isDetailsPanelShowed'
+    })
   },
   methods: {
-    getMovieDetailsValue(key) {
+    getDetailsValue(key) {
       return this.movieDetails[key];
-    }
+    },
+    getImgSrc() {
+      let src = this.getDetailsValue('poster_path');
+      return src ? `https://image.tmdb.org/t/p/w500${src}` : '';
+    },
+    ...mapMutations({
+      hide: 'hideDetailsPanel'
+    })
   }
 }
 </script>

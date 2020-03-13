@@ -30,6 +30,9 @@ export default new Vuex.Store({
       clearSearchResults(state) {
         state.searchResults.movies.splice(0, state.searchResults.movies.length);
       },
+      hideDetailsPanel(state) {
+        state.isDetailsPanelShowed = false;
+      },
       setDisplayModeSearch(state) {
         state.displayMode = 'search';
       },
