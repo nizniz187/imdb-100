@@ -3,7 +3,7 @@
     <movie-item v-for="(movie, index) in data.movies" 
       v-bind:key="movie.id" v-bind:movie="movie" v-bind:rank="index + 1">
     </movie-item>
-    <button type="button" v-if="!isListLoaded" v-on:click="showMoreMovies">More</button>
+    <v-btn block color="secondary" outlined v-if="!isListLoaded" v-on:click="showMoreMovies">Show More</v-btn>
   </div>
 </template>
 

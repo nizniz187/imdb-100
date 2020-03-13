@@ -8,7 +8,7 @@ export default new Vuex.Store({
     state: {
       displayMode: 'top',
       isDetailsPanelShowed: false,
-      movieDetails: null,
+      movieDetails: {},
       searchResults: {
         movies: [], limit: -1, type: 'search', keyword: ''
       },
