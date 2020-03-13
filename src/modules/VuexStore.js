@@ -63,20 +63,15 @@ export default new Vuex.Store({
         });
       },
       searchMovie({ commit, getters }, { keyword, page = 1 } = {}) {
-        if(keyword === getters.searchKeyword) { 
-          return; 
-        } else {
-          commit('setSearchKeyword', { keyword });
-          
+        commit('setSearchKeyword', { keyword });          
           TMDBRequest.searchMovie({
-            keyword: getters.searchKeyword,
-            page,
-            successHandler: ({ results, total_results }) => {
+          keyword: getters.searchKeyword,
+          page,
+          successHandler: ({ results, total_results }) => {
               commit('addSearchResults', { movies: results });
               commit('setSearchResultsLimit', { limit: total_results });
-            }
-          });
-        }
+          }
+        });
       },
       showDetails({ commit }, { movieId } = {}) {
         commit('showDetailsPanel');
@@ -95,9 +90,13 @@ export default new Vuex.Store({
           dispatch('getTopMovies');
         }
       },
-      showSearchResults({ dispatch, commit }, { keyword } = {}) {
+      showSearchResults({ dispatch, commit, getters }, { keyword } = {}) {
         if(keyword === '') { return; }
-        
+        if(keyword === getters.searchKeyword) { 
+          commit('setDisplayModeSearch');
+          return; 
+        }
+
         commit('clearSearchResults');
         commit('setDisplayModeSearch');
         dispatch('searchMovie', { keyword });
