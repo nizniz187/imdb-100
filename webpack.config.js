@@ -16,7 +16,8 @@ module.exports = {
     alias: {
       vue: 'vue/dist/vue.js',
       components: `${srcPath}/components`,
-      modules: `${srcPath}/modules`
+      modules: `${srcPath}/modules`,
+      plugins: `${srcPath}/plugins`
     },
     extensions: ['*', '.js', '.vue']
   },
@@ -40,6 +41,24 @@ module.exports = {
           { loader: MiniCssExtractPlugin.loader },
           'css-loader'
         ]
+      },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                fiber: require('fibers'),
+                indentedSyntax: true // optional
+              },
+            },
+          },
+        ],
       }
     ]
   },

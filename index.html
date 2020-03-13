@@ -6,19 +6,38 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>IMDB 100</title>
   <link rel="stylesheet" type="text/css" href="./dist/main.bundle.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
   <style>
-    #app { padding-top: 50px; }
     #btnBack { position: fixed; top: 10px; left: 10px; z-index: 2; }
   </style>
 </head>
 <body>
   <div id="app">
-    <button type="button" id="btnBack" v-on:click="showTopMovies">Top Movies</button>
-    <search-bar></search-bar>
-
-    <movie-list v-bind:data="topMovies" v-if="isDisplayModeTop"></movie-list>
-    <movie-list v-bind:data="searchResults" v-if="isDisplayModeSearch"></movie-list>
-
+    <v-app id="inspire">
+      <v-app-bar app dark>
+        <v-row align="stretch">
+          <v-col align-self="center">
+            <v-toolbar-title>IMDB TOP 100</v-toolbar-title>
+          </v-col>
+          <v-col align-self="center">
+            <search-bar></search-bar>
+          </v-col>
+        </v-row>
+        
+        
+        <!-- <button type="button" id="btnBack" v-on:click="showTopMovies">Top Movies</button> -->
+      </v-app-bar>  
+      <v-content>
+        <v-container class="fill-height" fluid>
+          <movie-list v-bind:data="topMovies" v-if="isDisplayModeTop"></movie-list>
+          <movie-list v-bind:data="searchResults" v-if="isDisplayModeSearch"></movie-list>
+        </v-container>
+      </v-content>
+      <v-footer app>
+        <span>&copy; 2020</span>
+      </v-footer>
+    </v-app>
     <movie-details v-if="isDetailsPanelShowed"></movie-details>
   </div>
   <script src="./dist/main.bundle.js"></script>

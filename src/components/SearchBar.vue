@@ -1,8 +1,8 @@
 <template>
-  <div class="search-bar">
-    <input type="text" placeholder="Type movie name for searching..." v-model="keyword" />
-    <button type="button" v-on:click="showSearchResults({ keyword })">Search</button>
-  </div>
+  <v-text-field
+    placeholder="Movie Name" v-model="keyword" hide-details
+    append-outer-icon="mdi-magnify" @click:append-outer="showSearchResults({ keyword })">
+  </v-text-field>
 </template>
 
 <script>
@@ -21,13 +21,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .search-bar {
-    background-color: cornflowerblue;
-    position: fixed; top: 0; left: 0;
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-  }
-</style>
