@@ -1,16 +1,28 @@
 <template>
-  <div style="margin-bottom: 10px">
-    <div style="font-weight:bold">{{ rank }}. {{ movie.title }} - {{ movie.popularity }}</div>
+  <div class="movie-item" v-on:click="showDetails({ movieId: movie.id })">
+    <div class="movie-title">{{ rank }}. {{ movie.title }} - {{ movie.popularity }}</div>
     <div>{{ movie.overview }}</div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  props: ['rank', 'movie']
+  props: ['rank', 'movie'],
+  methods: {
+    ...mapActions([
+      'showDetails'
+    ]),
+  }
 }
 </script>
 
 <style scoped>
-
+  .movie-item {
+    margin-bottom: 10px;
+  }
+  .movie-item .movie-title {
+    font-weight: bold;
+  }
 </style>

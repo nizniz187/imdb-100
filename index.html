@@ -10,9 +10,9 @@
 <body>
   <div id="app">
     <movie-list></movie-list>
-    <button type="button" v-if="!$store.getters.isTopMoviesLoaded" v-on:click="getTopMovies">More</button>
+    <button type="button" v-if="!isTopMoviesLoaded" v-on:click="getTopMovies">More</button>
 
-    <!-- <movie-details></movie-details> -->
+    <movie-details v-if="isDetailsPanelShowed"></movie-details>
   </div>
   <script src="./dist/main.bundle.js"></script>
 </body>

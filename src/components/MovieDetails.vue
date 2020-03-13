@@ -1,10 +1,16 @@
 <template>
-  <div class="movie-details">MovieDetails</div>
+  <div class="movie-details">{{ movieDetails }}</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  props: []
+  computed: {
+    movieDetails() {
+      return this.$store.state.movieDetails;
+    }
+  }
 }
 </script>
 

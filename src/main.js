@@ -8,13 +8,21 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    topMovies: []
+    topMovies: [],
+    isDetailsPanelShowed: false,
+    movieDetails: null
   },
   mutations: {
-    addTopMovies: function(state, { movies } = {}) {
+    addTopMovies: (state, { movies } = {}) => {
       if(Array.isArray(movies)) {
         movies.forEach(movie => { state.topMovies.push(movie); });
       }
+    },
+    showDetails: (state, payload) => {
+      state.movieDetails = payload;
+    },
+    showDetailsPanel: state => {
+      state.isDetailsPanelShowed = true;
     }
   },
   actions: {
@@ -22,9 +30,23 @@ const store = new Vuex.Store({
       if(getters.isTopMoviesLoaded) { return; }
       
       commit('addTopMovies', payload);
+    },    
+    getTopMovies({ dispatch, getters }) {
+      if(getters.isTopMoviesLoaded) { return; }
+
+      TMDBRequest.getTopMovies(Math.floor(getters.topMoviesCount / 20 + 1))
+        .then(({ data: { results } = {} } = {}) => { 
+          dispatch('addTopMovies', { movies: results })
+        });
+    },
+    showDetails: function({ commit }, { movieId } = {}) {
+      console.log(movieId)
+      commit('showDetailsPanel');
+      commit('showDetails', { movieId });
     }
   },
   getters: {
+    isDetailsPanelShowed: state => { return state.isDetailsPanelShowed; },
     isTopMoviesLoaded: (state, getters) => { return getters.topMoviesCount >= 100; },
     topMoviesCount: state => { return state.topMovies.length; }
   } 
@@ -38,18 +60,17 @@ new Vue({
     MovieDetails
   },
   created: function() {
-    this.getTopMovies();
+    this.$store.dispatch('getTopMovies');
+  },
+  computed: {
+    ...Vuex.mapGetters([
+      'isDetailsPanelShowed',
+      'isTopMoviesLoaded'
+    ])
   },
   methods: {
-    getTopMovies() {
-      if(this.$store.getters.isTopMoviesLoaded) { return; }
-
-      TMDBRequest.getTopMovies({ 
-        page: Math.floor(this.$store.getters.topMoviesCount / 20 + 1),
-        successHandler: ({ data: { results } = {} } = {}) => { 
-          this.$store.dispatch('addTopMovies', { movies: results })
-        } 
-      });
-    }
+    ...Vuex.mapActions([
+      'getTopMovies'
+    ])
   }
 });
