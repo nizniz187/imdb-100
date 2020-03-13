@@ -18,7 +18,9 @@
       <v-app-bar app dark>
         <v-row align="stretch">
           <v-col align-self="center">
-            <v-toolbar-title id="btnBack" v-on:click="showTopMovies">IMDB TOP 100</v-toolbar-title>
+            <v-toolbar-title>
+              <span id="btnBack" v-on:click="showTopMovies">IMDB TOP 100</span>
+            </v-toolbar-title>
           </v-col>
           <v-col align-self="center">
             <search-bar></search-bar>
