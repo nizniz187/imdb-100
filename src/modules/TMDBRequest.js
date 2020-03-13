@@ -14,7 +14,7 @@ export function getMovieDetails({ movieId, successHandler, errorHandler } = {}) 
     });
 }
 export function getTopMovies({ page = 1, successHandler, errorHandler } = {}) {
-  return axios.get(`${HOST}/discover/movie?api_key=${API_KEY}&page=${page}`)
+  return axios.get(`${HOST}/discover/movie?api_key=${API_KEY}&page=${page}&sort_by=popularity.desc`)
     .then(({ data: { results } = {} } = {}) => {
       resolveHandler(results, successHandler);
     })
