@@ -10,7 +10,11 @@
 import MovieItem from 'components/MovieItem.vue';
 export default {
   components: { MovieItem },
-  props: ['movies']
+  computed: {
+    movies() {
+      return this.$store.state.topMovies;
+    }
+  }
 }
 </script>
 
