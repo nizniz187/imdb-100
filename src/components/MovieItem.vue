@@ -1,7 +1,7 @@
 <template>
   <v-card outlined v-on:click="showDetails({ movieId: movie.id })" class="mb-2">
-    <v-list-item three-line>
-      <v-img class="grey lighten-2 ma-5" max-width="100px" max-height="100px" contain
+    <v-list-item three-line class="pa-0">
+      <v-img class="grey lighten-2 ma-3 ma-sm-5" max-width="100px" max-height="100px" contain
           v-bind:src="getImgSrc()">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center" >
@@ -10,7 +10,7 @@
         </template>
       </v-img>
       <v-list-item-content>
-        <div class="overline mb-4">{{ rank }} / {{ movie.popularity }}</div>
+        <div class="overline mb-2 mb-sm-4">{{ rank }} / {{ movie.popularity }}</div>
         <v-list-item-title class="headline mb-1">{{ movie.title }}</v-list-item-title>
         <v-list-item-subtitle>{{ movie.overview }}</v-list-item-subtitle>
       </v-list-item-content>

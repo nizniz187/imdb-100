@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="movie-list">
     <movie-item v-for="(movie, index) in data.movies" 
       v-bind:key="movie.id" v-bind:movie="movie" v-bind:rank="index + 1">
     </movie-item>
     <div v-if="isListEmpty">
-      <h1 min-width="100%">No Result</h1>
+      <h1 min-width="100%" class="text-center">No Result</h1>
     </div>
     <v-btn block color="secondary" outlined v-else-if="!isListLoaded" v-on:click="showMoreMovies">Show More</v-btn>
   </div>
@@ -30,3 +30,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .movie-list { width: 100%; }
+</style>
